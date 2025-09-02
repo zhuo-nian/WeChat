@@ -1,9 +1,9 @@
 const sha1 = require('sha1');
 const config = require('../config')
+const { getUserDataAsync } = require('../utils/tool')
 
 module.exports = () => {
-    return (req, res) => {
-        console.log('我收到的请求是：', req.query);
+    return async (req, res) => {
         const { signature, timestamp, nonce, echostr } = req.query;
         const { token } = config;
         const sha = sha1([token, timestamp, nonce].sort().join(''))
@@ -17,8 +17,9 @@ module.exports = () => {
             if (sha !== signature) {
                 res.end('error');
             }
-            console.log(req.query)
-
+            const xmlData = await getUserDataAsync(req);
+            console.log(xmlData);
+            res.end('success');
         } else {
             res.end('error');
         }
