@@ -15,7 +15,7 @@ module.exports = () => {
             }
         } else if (req.method === 'POST') {
             if (sha !== signature) {
-                res.end('error');
+                return res.end('error');
             }
             const xmlData = await getUserDataAsync(req);
             console.log(xmlData);

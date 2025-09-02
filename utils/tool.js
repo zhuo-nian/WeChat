@@ -4,7 +4,7 @@ module.exports = {
             const xmlData = '';
             req
                 .on('data', data => {
-                    xmlData += data.tostring();
+                    xmlData += data.toString();
                 })
                 .on('close', () => {
                     resolve(xmlData)
