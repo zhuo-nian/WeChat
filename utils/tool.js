@@ -1,7 +1,7 @@
 module.exports = {
     getUserDataAsync (req) {
         return new Promise((resolve, reject) => {
-            const xmlData = '';
+            let xmlData = '';
             req
                 .on('data', data => {
                     xmlData += data.toString();
