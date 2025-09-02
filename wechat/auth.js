@@ -1,6 +1,7 @@
 const sha1 = require('sha1');
 const config = require('../config')
 const { getUserDataAsync, parseXMLAsync, formatMessage } = require('../utils/tool')
+const template = require('./template');
 
 module.exports = () => {
     return async (req, res) => {
@@ -20,19 +21,20 @@ module.exports = () => {
             const xmlData = await getUserDataAsync(req);
             const jsData = await parseXMLAsync(xmlData);
             const message = formatMessage(jsData);
+            let options = {
+                toUserName: message.FromUserName,
+                fromUserName: message.ToUserName,
+                createTime: Date.now(),
+                msgType: 'text',
+            }
             let content = '你说的 ' + message.Content + ' 太复杂了，我还不太懂。';
             if (message.MsgType === 'text') {
                 if (message.Content === '每日新闻') {
                     content = '我将发送每日新闻图片';
                 }
             }
-            let replyMessage = `<xml>
-                <ToUserName><![CDATA[${message.FromUserName}]]></ToUserName>
-                <FromUserName><![CDATA[${message.ToUserName}]]></FromUserName>
-                <CreateTime>${Date.now()}</CreateTime>
-                <MsgType><![CDATA[text]]></MsgType>
-                <Content><![CDATA[${content}]]></Content>
-                </xml>`;
+            options.content = content;
+            const replyMessage = template(options);
             res.send(replyMessage);
         } else {
             res.end('error');
