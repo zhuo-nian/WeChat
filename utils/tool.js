@@ -1,5 +1,5 @@
 module.exports = {
-    getUserDataAsync () {
+    getUserDataAsync (req) {
         return new Promise((resolve, reject) => {
             const xmlData = '';
             req
