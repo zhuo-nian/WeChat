@@ -1,3 +1,5 @@
+const {parseString} = require('xml2js');
+
 module.exports = {
     getUserDataAsync (req) {
         return new Promise((resolve, reject) => {
@@ -6,9 +8,20 @@ module.exports = {
                 .on('data', data => {
                     xmlData += data.toString();
                 })
-                .on('close', () => {
+                .on('end', () => {
                     resolve(xmlData)
                 })
+        })
+    },
+    parseXMLAsync (xmlData) {
+        return new Promise((resolve, reject) => {
+            parseString(xmlData, {trim: true}, (err, data) => {
+                if (!err) {
+                    resolve(data)
+                } else {
+                    reject(err)
+                }
+            })
         })
     }
 }
