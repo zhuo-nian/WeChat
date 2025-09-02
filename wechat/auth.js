@@ -6,15 +6,21 @@ module.exports = () => {
         console.log('我收到的请求是：', req.query);
         const { signature, timestamp, nonce, echostr } = req.query;
         const { token } = config;
-        const arr = [token, timestamp, nonce].sort();
-        const str = arr.join('');
-        const sha = sha1(str);
-        if (sha === signature) {
-            res.send(echostr);
-            console.log('微信验证成功');
+        const sha = sha1([token, timestamp, nonce].sort().join(''))
+        if (req.method === 'GET') {
+            if (sha === signature) {
+                res.send(echostr);
+            } else {
+                res.end('error');
+            }
+        } else if (req.method === 'POST') {
+            if (sha !== signature) {
+                res.end('error');
+            }
+            console.log(req.query)
+
         } else {
             res.end('error');
-            console.log('微信验证失败');
         }
     }
 }
