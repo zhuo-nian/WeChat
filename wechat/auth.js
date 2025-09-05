@@ -24,7 +24,7 @@ module.exports = () => {
             let options = {
                 toUserName: message.FromUserName,
                 fromUserName: message.ToUserName,
-                createTime: Date.now() / 1000,
+                createTime: Date.now(),
                 msgType: 'text',
             }
             let content = '你说的 ' + message.Content + ' 太复杂了，我还不太懂。';
@@ -36,7 +36,6 @@ module.exports = () => {
             options.content = content;
             const replyMessage = template(options);
             console.log(replyMessage);
-            res.type('xml');
             res.send(replyMessage);
         } else {
             res.end('error');
