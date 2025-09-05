@@ -22,8 +22,8 @@ module.exports = () => {
             const jsData = await parseXMLAsync(xmlData);
             const message = formatMessage(jsData);
             let options = {
-                toUserName: message.FromUserName,
-                fromUserName: message.ToUserName,
+                toUserName: message.ToUserName,
+                fromUserName: message.FromUserName,
                 createTime: Date.now(),
                 msgType: 'text',
             }
@@ -35,16 +35,8 @@ module.exports = () => {
             }
             options.content = content;
             const replyMessage = template(options);
-            console.log('原来的：',replyMessage);
-            const a = `<xml>
-  <ToUserName><![CDATA[${message.FromUserName}]]></ToUserName>
-  <FromUserName><![CDATA[${message.ToUserName}]]></FromUserName>
-  <CreateTime>${Date.now()}</CreateTime>
-  <MsgType><![CDATA[text]]></MsgType>
-  <Content><![CDATA[this is a test]]></Content>
-</xml>`
-            console.log('a:',a)
-            res.send(a);
+            console.log(replyMessage);
+            res.send(replyMessage);
         } else {
             res.end('error');
         }
