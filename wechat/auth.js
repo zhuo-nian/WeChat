@@ -24,7 +24,7 @@ module.exports = () => {
             let options = {
                 toUserName: message.FromUserName,
                 fromUserName: message.ToUserName,
-                createTime: Date.now(),
+                createTime: Date.now() / 1000,
                 msgType: 'text',
             }
             let content = '你说的 ' + message.Content + ' 太复杂了，我还不太懂。';
