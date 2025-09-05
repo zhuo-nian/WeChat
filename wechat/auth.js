@@ -36,6 +36,7 @@ module.exports = () => {
             options.content = content;
             const replyMessage = template(options);
             console.log(replyMessage);
+            res.type('xml');
             res.send(replyMessage);
         } else {
             res.end('error');
