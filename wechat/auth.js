@@ -35,14 +35,16 @@ module.exports = () => {
             }
             options.content = content;
             const replyMessage = template(options);
-            console.log(replyMessage);
-            res.send(`<xml>
+            console.log('原来的：',replyMessage);
+            const a = `<xml>
   <ToUserName><![CDATA[${message.FromUserName}]]></ToUserName>
   <FromUserName><![CDATA[${message.ToUserName}]]></FromUserName>
   <CreateTime>${Date.now()}</CreateTime>
   <MsgType><![CDATA[text]]></MsgType>
   <Content><![CDATA[this is a test]]></Content>
-</xml>`);
+</xml>`
+            console.log('a:',a)
+            res.send(a);
         } else {
             res.end('error');
         }
