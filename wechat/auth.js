@@ -1,7 +1,15 @@
 const sha1 = require('sha1');
+const axios = require('axios');
 const config = require('../config')
 const { getUserDataAsync, parseXMLAsync, formatMessage } = require('../utils/tool')
 const template = require('./template');
+
+const url = 'https://v3.alapi.cn/api/zaobao';
+const options = {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: '{"token":"0AlVLGpjYqgCD0mP","format":"json"}'
+};
 
 module.exports = () => {
     return async (req, res) => {
@@ -30,6 +38,8 @@ module.exports = () => {
             let content = '你说的 ' + message.Content + ' 太复杂了，我还不太懂。';
             if (message.MsgType === 'text') {
                 if (message.Content === '每日新闻') {
+                    const a = await axios.post(url, options);
+                    console.log(a.data);
                     content = '我将发送每日新闻图片';
                 }
             }
